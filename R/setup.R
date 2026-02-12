@@ -622,25 +622,25 @@ match_seqic_indicator <- function(
 
 # --- format_seqic_comparison ---
 # Generalized function to format SEQIC indicator results for use as
-# comparison benchmarks (region or trauma facility level).
+# comparison benchmarks (district or trauma facility level).
 #
 # Arguments:
 # - data: A tibble of wide-format SEQIC indicator results.
-# - type: A string specifying the benchmark type, either "region" or "level".
+# - type: A string specifying the benchmark type, either "district" or "level".
 #
 # Output:
 # A long-format tibble with indicator metadata and a single column renamed to
 # reflect the comparison type:
-# - "comparison region performance" or
+# - "comparison district performance" or
 # - "comparison trauma facility performance"
 #
 # Usage in workflow:
-# 1. Calculate comparison data grouped by region or trauma level.
+# 1. Calculate comparison data grouped by district or trauma level.
 # 2. Use this function to prepare those data for joining with agency-level outputs.
 
 format_seqic_comparison <- function(
   data,
-  type = c("region", "level"),
+  type = c("district", "level"),
   rename_cols = FALSE, # Whether to apply dynamic renaming to columns
   column_pattern = NULL, # Regex pattern to match columns of interest
   match_pattern = NULL, # Regex pattern to match suffixes needing renaming
@@ -650,7 +650,7 @@ format_seqic_comparison <- function(
 
   # Determine appropriate name
   perf_col <- dplyr::case_when(
-    type == "region" ~ "comparison region performance",
+    type == "district" ~ "comparison district performance",
     type == "level" ~ "comparison trauma facility performance"
   )
 
@@ -669,11 +669,11 @@ format_seqic_comparison <- function(
 # Join comparison benchmarks to SEQIC results and format for reporting
 #
 # This function merges SEQIC performance results with comparison benchmarks
-# at both the state level (`data_level`) and the regional level (`data_region`).
+# at both the state level (`data_level`) and the district level (`data_district`).
 #
 # It performs the following operations:
 # - Joins `data` to `data_level` by Year, Level I/II designation, and indicator code.
-# - Joins `data` to `data_region` by Year, Service Area, and indicator code.
+# - Joins `data` to `data_district` by Year, Service Area, and indicator code.
 # - Applies `pretty_percent()` formatting from the traumar package to all relevant
 #   percentage-based columns, rounding to 2 decimal places and preserving `NA` values.
 # - Standardizes all column names to lowercase.
@@ -682,17 +682,17 @@ format_seqic_comparison <- function(
 # Expected inputs:
 # - `data`: Long-format SEQIC results with columns like Year, Level_I_II, Service Area, and indicator.
 # - `data_level`: State-level comparison data, matched on Year, Level_I_II, and indicator.
-# - `data_region`: Region-level comparison data, matched on Year, Service Area, and indicator.
+# - `data_district`: Region-level comparison data, matched on Year, Service Area, and indicator.
 #
 # Returns a formatted tibble with performance values and comparisons ready for tabular report output.
-join_comparison_data <- function(data, data_level, data_region) {
+join_comparison_data <- function(data, data_level, data_district) {
   data |>
     dplyr::left_join(
       data_level,
       by = dplyr::join_by(Year, Level_I_II, indicator)
     ) |>
     dplyr::left_join(
-      data_region,
+      data_district,
       by = dplyr::join_by(Year, `Service Area`, indicator)
     ) |>
     dplyr::mutate(dplyr::across(
@@ -702,7 +702,7 @@ join_comparison_data <- function(data, data_level, data_region) {
         `lower ci`,
         `upper ci`,
         `comparison trauma facility performance`,
-        `comparison region performance`
+        `comparison district performance`
       ),
       ~ ifelse(
         is.na(.),
@@ -774,6 +774,9 @@ export_state_data <- function(
     subfolder,
     paste0(x_name, ".csv")
   )
+
+  # Create the final directory if it does not exist.
+  fs::dir_create(output_path, subfolder)
 
   # Write the data frame or tibble 'x' to the constructed file path in CSV format.
   readr::write_csv(x = x, file = file_path)
