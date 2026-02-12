@@ -9,7 +9,7 @@
 
 ### SEQIC indicator 10 ####
 
-# Regions
+# Districts
 seqic_indicator_10_regions <- trauma_2020_2024 |>
   traumar::seqic_indicator_10(
     level = Level,
@@ -62,7 +62,7 @@ seqic_indicator_10_results <- trauma_2020_2024 |>
   )
 
 ###_____________________________________________________________________________
-### State, Region, and Verification Level Performance Reporting
+### State, District, and Verification Level Performance Reporting
 ###_____________________________________________________________________________
 
 # state level

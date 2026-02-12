@@ -9,8 +9,8 @@
 
 ### SEQIC indicator 3 ####
 
-# Regions
-seqic_indicator_3_regions <- trauma_2020_2024 |>
+# Districts
+seqic_indicator_3_districts <- trauma_2020_2024 |>
   traumar::seqic_indicator_3(
     level = Level,
     trauma_type = Trauma_Type,
@@ -19,7 +19,7 @@ seqic_indicator_3_regions <- trauma_2020_2024 |>
     groups = c("Year", "Service Area"),
     calculate_ci = "w"
   ) |>
-  format_seqic_comparison(type = "region") |>
+  format_seqic_comparison(type = "district") |>
   dplyr::select(-c(`lower ci`, `upper ci`))
 
 # Level
@@ -49,11 +49,11 @@ seqic_indicator_3_results <- trauma_2020_2024 |>
   match_seqic_indicator(col = indicator, performance_col = performance) |>
   join_comparison_data(
     data_level = seqic_indicator_3_level,
-    data_region = seqic_indicator_3_regions
+    data_district = seqic_indicator_3_districts
   )
 
 ###_____________________________________________________________________________
-### State, Region, and Verification Level Performance Reporting
+### State, District, and Verification Level Performance Reporting
 ###_____________________________________________________________________________
 
 # state level
@@ -124,8 +124,8 @@ seqic_indicator_3_results_state_age <- trauma_2020_2024 |>
   ) |>
   dplyr::arrange(Year, Age_Range)
 
-# service areas
-seqic_indicator_3_results_service_areas <- trauma_2020_2024 |>
+# districts
+seqic_indicator_3_results_districts <- trauma_2020_2024 |>
   traumar::seqic_indicator_3(
     level = Level,
     trauma_type = Trauma_Type,
@@ -188,9 +188,9 @@ export_state_data(
   subfolder = "3"
 )
 
-# service area level reporting
+# district level reporting
 export_state_data(
-  x = seqic_indicator_3_results_service_areas,
+  x = seqic_indicator_3_results_districts,
   subfolder = "3"
 )
 

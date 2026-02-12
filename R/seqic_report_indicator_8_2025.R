@@ -8,8 +8,8 @@
 
 ### SEQIC indicator 8 ####
 
-# Regions - overall
-seqic_indicator_8_regions_overall <- trauma_2020_2024 |>
+# Districts - overall
+seqic_indicator_8_districts_overall <- trauma_2020_2024 |>
   traumar::seqic_indicator_8(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -20,7 +20,7 @@ seqic_indicator_8_regions_overall <- trauma_2020_2024 |>
   ) |>
   purrr::pluck(1) |> # get the first list element, which houses the overall results
   format_seqic_comparison(
-    type = "region",
+    type = "district",
     rename_cols = TRUE,
     column_pattern = "(?:lower|upper)_ci",
     match_pattern = "_8$",
@@ -30,8 +30,8 @@ seqic_indicator_8_regions_overall <- trauma_2020_2024 |>
   dplyr::mutate(Risk_Definition = "All") |>
   dplyr::relocate(Risk_Definition, .after = `Service Area`)
 
-# Regions - risk groups
-seqic_indicator_8_regions_risk <- trauma_2020_2024 |>
+# Districts - risk groups
+seqic_indicator_8_districts_risk <- trauma_2020_2024 |>
   traumar::seqic_indicator_8(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -42,7 +42,7 @@ seqic_indicator_8_regions_risk <- trauma_2020_2024 |>
   ) |>
   purrr::pluck(2) |> # get the second list element, which houses the overall results
   format_seqic_comparison(
-    type = "region",
+    type = "district",
     rename_cols = TRUE,
     column_pattern = "(?:lower|upper)_ci",
     match_pattern = "_8$",
@@ -50,9 +50,9 @@ seqic_indicator_8_regions_risk <- trauma_2020_2024 |>
   ) |>
   dplyr::select(-c(`lower ci`, `upper ci`))
 
-# Union the region tibbles
-seqic_indicator_8_regions <- seqic_indicator_8_regions_overall |>
-  dplyr::bind_rows(seqic_indicator_8_regions_risk) |>
+# Union the district tibbles
+seqic_indicator_8_districts <- seqic_indicator_8_districts_overall |>
+  dplyr::bind_rows(seqic_indicator_8_districts_risk) |>
   dplyr::arrange(`Service Area`, Year, Risk_Definition)
 
 # Level - overall
@@ -127,7 +127,7 @@ seqic_indicator_8_results_overall <- trauma_2020_2024 |>
     by = dplyr::join_by(Year, Level_I_II, Risk_Definition, indicator)
   ) |>
   dplyr::left_join(
-    seqic_indicator_8_regions,
+    seqic_indicator_8_districts,
     by = dplyr::join_by(Year, `Service Area`, Risk_Definition, indicator)
   )
 
@@ -154,7 +154,7 @@ seqic_indicator_8_results_risk <- trauma_2020_2024 |>
     by = dplyr::join_by(Year, Level_I_II, Risk_Definition, indicator)
   ) |>
   dplyr::left_join(
-    seqic_indicator_8_regions,
+    seqic_indicator_8_districts,
     by = dplyr::join_by(Year, `Service Area`, Risk_Definition, indicator)
   ) |>
   dplyr::relocate(Risk_Definition, .after = `Service Area`)
@@ -187,7 +187,7 @@ seqic_indicator_8_results <- seqic_indicator_8_results_overall |>
       `lower ci`,
       `upper ci`,
       `comparison trauma facility performance`,
-      `comparison region performance`
+      `comparison district performance`
     ),
     ~ ifelse(
       is.na(.),
@@ -199,7 +199,7 @@ seqic_indicator_8_results <- seqic_indicator_8_results_overall |>
   dplyr::rename(level = level_i_ii)
 
 ###_____________________________________________________________________________
-### State, Region, and Verification Level Performance Reporting
+### State, District, and Verification Level Performance Reporting
 ###_____________________________________________________________________________
 
 # state level
@@ -402,8 +402,8 @@ seqic_indicator_8_results_state_age <- seqic_indicator_8_results_state_overall_a
   ) |>
   dplyr::arrange(Year, Age_Range, Risk_Definition)
 
-# service areas - overall
-seqic_indicator_8_results_service_areas_overall <- trauma_2020_2024 |>
+# districts - overall
+seqic_indicator_8_results_districts_overall <- trauma_2020_2024 |>
   traumar::seqic_indicator_8(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -431,8 +431,8 @@ seqic_indicator_8_results_service_areas_overall <- trauma_2020_2024 |>
   dplyr::mutate(Risk_Definition = "All") |>
   dplyr::relocate(Risk_Definition, .before = indicator)
 
-# service areas - risk groups
-seqic_indicator_8_results_service_areas_risk <- trauma_2020_2024 |>
+# districts - risk groups
+seqic_indicator_8_results_districts_risk <- trauma_2020_2024 |>
   traumar::seqic_indicator_8(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -465,9 +465,9 @@ seqic_indicator_8_results_service_areas_risk <- trauma_2020_2024 |>
     )
   )
 
-# union the region level tables
-seqic_indicator_8_results_service_areas <- seqic_indicator_8_results_service_areas_overall |>
-  dplyr::bind_rows(seqic_indicator_8_results_service_areas_risk) |>
+# union the district level tables
+seqic_indicator_8_results_districts <- seqic_indicator_8_results_districts_overall |>
+  dplyr::bind_rows(seqic_indicator_8_results_districts_risk) |>
   dplyr::mutate(
     Risk_Definition = factor(
       Risk_Definition,
@@ -572,9 +572,9 @@ export_state_data(
   subfolder = "8"
 )
 
-# service area level reporting
+# district level reporting
 export_state_data(
-  x = seqic_indicator_8_results_service_areas,
+  x = seqic_indicator_8_results_districts,
   subfolder = "8"
 )
 
