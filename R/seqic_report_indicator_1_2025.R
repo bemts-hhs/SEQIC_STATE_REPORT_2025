@@ -138,6 +138,16 @@ seqic_indicator_1_results_state_districts <- trauma_2020_2024 |>
     )
   ))
 
+# districts (wide)
+seqic_indicator_1_results_state_districts_wide <- seqic_indicator_1_results_state_districts |>
+  dplyr::filter(Year == 2024) |>
+  dplyr::select(Year, `Service Area`, indicator, name, performance) |>
+  tidyr::pivot_wider(
+    id_cols = c(Year, indicator, name),
+    names_from = `Service Area`,
+    values_from = performance
+  )
+
 # trauma center verification levels
 seqic_indicator_1_results_state_verification <- trauma_2020_2024 |>
   traumar::seqic_indicator_1(
@@ -173,6 +183,12 @@ export_state_data(x = seqic_indicator_1_results_state_age, subfolder = "1")
 export_state_data(
   x = seqic_indicator_1_results_state_districts,
   subfolder = "1"
+)
+
+# wide district level reporting
+export_state_data(
+  x = seqic_indicator_1_results_state_districts_wide,
+  subfolder = "2"
 )
 
 # verification level reporting
