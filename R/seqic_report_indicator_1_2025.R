@@ -115,7 +115,7 @@ seqic_indicator_1_results_state_age <- trauma_2020_2024 |>
   ) |>
   dplyr::arrange(Year, Age_Range)
 
-# service areas
+# districts
 seqic_indicator_1_results_state_districts <- trauma_2020_2024 |>
   traumar::seqic_indicator_1(
     trauma_team_activation_level = Trauma_Team_Activation_Level,
@@ -169,7 +169,7 @@ export_state_data(x = seqic_indicator_1_results_state, subfolder = "1")
 # state level by age reporting
 export_state_data(x = seqic_indicator_1_results_state_age, subfolder = "1")
 
-# service area level reporting
+# district level reporting
 export_state_data(
   x = seqic_indicator_1_results_state_districts,
   subfolder = "1"
