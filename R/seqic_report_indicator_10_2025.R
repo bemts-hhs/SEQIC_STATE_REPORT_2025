@@ -10,7 +10,7 @@
 ### SEQIC indicator 10 ####
 
 # Districts
-seqic_indicator_10_regions <- trauma_2020_2024 |>
+seqic_indicator_10_districts <- trauma_2020_2024 |>
   traumar::seqic_indicator_10(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -22,7 +22,7 @@ seqic_indicator_10_regions <- trauma_2020_2024 |>
     calculate_ci = "w"
   ) |>
   purrr::pluck(1) |>
-  format_seqic_comparison(type = "region") |>
+  format_seqic_comparison(type = "district") |>
   dplyr::select(-c(`lower ci`, `upper ci`, triage_logic))
 
 # Level
@@ -40,26 +40,6 @@ seqic_indicator_10_level <- trauma_2020_2024 |>
   purrr::pluck(1) |>
   format_seqic_comparison(type = "level") |>
   dplyr::select(-c(`lower ci`, `upper ci`, triage_logic))
-
-# Agency-specific
-seqic_indicator_10_results <- trauma_2020_2024 |>
-  traumar::seqic_indicator_10(
-    level = Level,
-    unique_incident_id = Unique_Incident_ID,
-    transfer_out_indicator = Acute_Transfer_Out,
-    trauma_team_activation_level = Trauma_Team_Activation_Level,
-    iss = NULL,
-    nfti = NFTI,
-    groups = c("Year", "Level_I_II", "Service Area", "Current Facility Name"),
-    calculate_ci = "w"
-  ) |>
-  purrr::pluck(1) |>
-  reshape_seqic_indicators() |>
-  match_seqic_indicator(col = indicator, performance_col = performance) |>
-  join_comparison_data(
-    data_level = seqic_indicator_10_level,
-    data_region = seqic_indicator_10_regions
-  )
 
 ###_____________________________________________________________________________
 ### State, District, and Verification Level Performance Reporting
@@ -139,8 +119,8 @@ seqic_indicator_10_results_state_age <- trauma_2020_2024 |>
   ) |>
   dplyr::arrange(Year, Age_Range)
 
-# service areas
-seqic_indicator_10_results_service_areas <- trauma_2020_2024 |>
+# districts
+seqic_indicator_10_results_state_districts <- trauma_2020_2024 |>
   traumar::seqic_indicator_10(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -163,8 +143,18 @@ seqic_indicator_10_results_service_areas <- trauma_2020_2024 |>
     )
   ))
 
+# districts (wide)
+seqic_indicator_10_results_state_districts_wide <- seqic_indicator_10_results_state_districts |>
+  dplyr::filter(Year == 2024) |>
+  dplyr::select(Year, `Service Area`, indicator, name, performance) |>
+  tidyr::pivot_wider(
+    id_cols = c(Year, indicator, name),
+    names_from = `Service Area`,
+    values_from = performance
+  )
+
 # trauma center verification levels
-seqic_indicator_10_results_verification <- trauma_2020_2024 |>
+seqic_indicator_10_results_state_verification <- trauma_2020_2024 |>
   traumar::seqic_indicator_10(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -189,14 +179,6 @@ seqic_indicator_10_results_verification <- trauma_2020_2024 |>
 
 ### Export ####
 
-# hospital reporting
-export_seqic_data(
-  agency_names = unique(trauma_2024$`Current Facility Name`),
-  facility_name_col = `current facility name`,
-  seqic_results = seqic_indicator_10_results,
-  indicator = "indicator_10"
-)
-
 # state level reporting
 export_state_data(
   x = seqic_indicator_10_results_state,
@@ -209,14 +191,20 @@ export_state_data(
   subfolder = "10"
 )
 
-# service area level reporting
+# district level reporting
 export_state_data(
-  x = seqic_indicator_10_results_service_areas,
+  x = seqic_indicator_10_results_state_districts,
+  subfolder = "10"
+)
+
+# district level reporting
+export_state_data(
+  x = seqic_indicator_10_results_state_districts_wide,
   subfolder = "10"
 )
 
 # verification level reporting
 export_state_data(
-  x = seqic_indicator_10_results_verification,
+  x = seqic_indicator_10_results_state_verification,
   subfolder = "10"
 )
