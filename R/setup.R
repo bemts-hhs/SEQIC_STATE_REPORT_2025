@@ -111,6 +111,44 @@ dynamic_rm_bin_summary <- function(
   return(results)
 }
 
+# Function to compute the statistical mode of a vector
+# Returns the most frequently occurring value in x
+# Handles NA values by removing them before computation (optional)
+stat_mode <- function(x, na.rm = TRUE) {
+  # Optionally remove missing values from the vector
+  if (na.rm) {
+    # Remove missing values to avoid skewing counts and errors
+    x <- stats::na.omit(x)
+  } else if (any(is.na(x))) {
+    # If NAs present and not removing, return NA as mode is undefined
+    return(NA)
+  }
+
+  # Handle empty input gracefully
+  if (length(x) == 0) {
+    return(NA)
+  }
+
+  # Get all unique values from the vector
+  # These are the candidate mode values
+  ux <- unique(x)
+
+  # Find the position of each element of x in the unique values vector
+  # This creates an integer index vector corresponding to ux
+  idx <- match(x, ux)
+
+  # Count the number of times each unique value appears in x
+  # The result is an integer vector with counts aligned to ux
+  counts <- tabulate(idx)
+
+  # Determine the index of the unique value with the highest count
+  # This identifies the position of the mode in ux
+  mode_index <- which.max(counts)
+
+  # Return the mode value itself, i.e., the unique value with the highest frequency
+  ux[mode_index]
+}
+
 ###_____________________________________________________________________________
 ### Helper to summarize reinjury counts after filtering for reinjuries (n > 1)
 ### Input:
@@ -243,6 +281,50 @@ injury_incident_count <- function(df, ..., descriptive_stats = FALSE) {
 
   cli::cli_alert_success(
     "Returning the count(s) of total unique injury events leading to a trauma center visit and descriptive statistics."
+  )
+
+  return(out)
+}
+
+###_____________________________________________________________________________
+### Custom function to get unique count of patients in Patient Registry
+### Estimates number of unique patients with trauma center visits per group
+### Assumes Unique_Patient_ID is consistent across years (mostly)
+### Groups first, then deduplicates per group to count unique patients correctly
+### Supports flexible grouping via tidy evaluation (bare column names in ...)
+###_____________________________________________________________________________
+injury_patient_count <- function(df, ..., descriptive_stats = FALSE) {
+  # Capture grouping variables as symbols and convert to character strings for .by and joins
+  grouping_syms <- rlang::ensyms(...)
+  grouping_vars <- sapply(grouping_syms, rlang::as_string)
+
+  # Prepare dataset: remove rows with missing patient IDs, group by user variables,
+  # then select distinct Unique_Patient_ID within each group to avoid counting duplicates
+  temp <- df |>
+    dplyr::filter(!is.na(Unique_Patient_ID)) |>
+    dplyr::group_by(!!!grouping_syms) |>
+    dplyr::distinct(Unique_Patient_ID, .keep_all = TRUE) |>
+    dplyr::ungroup()
+
+  if (!descriptive_stats) {
+    # Basic count of unique patients per group
+    out <- temp |>
+      dplyr::count(!!!grouping_syms)
+
+    cli::cli_alert_success(
+      "Returning the count(s) of total unique patients who had a trauma center visit and have a non-missing unique patient ID."
+    )
+
+    return(out)
+  }
+
+  # When descriptive_stats = TRUE, add change metrics for counts
+  out <- temp |>
+    dplyr::count(!!!grouping_syms) |>
+    add_change_metrics()
+
+  cli::cli_alert_success(
+    "Returning the count(s) of total unique patients who had a trauma center visit and have a non-missing unique patient ID and descriptive statistics."
   )
 
   return(out)
