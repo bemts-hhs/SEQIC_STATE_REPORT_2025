@@ -11,6 +11,7 @@
 
 # Districts
 seqic_indicator_7_districts <- trauma_2020_2024 |>
+  dplyr::filter(Acute_Transfer_Out == "No") |>
   traumar::seqic_indicator_7(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -24,6 +25,7 @@ seqic_indicator_7_districts <- trauma_2020_2024 |>
 
 # Level
 seqic_indicator_7_level <- trauma_2020_2024 |>
+  dplyr::filter(Acute_Transfer_Out == "No") |>
   traumar::seqic_indicator_7(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -41,6 +43,7 @@ seqic_indicator_7_level <- trauma_2020_2024 |>
 
 # state level
 seqic_indicator_7_results_state <- trauma_2020_2024 |>
+  dplyr::filter(Acute_Transfer_Out == "No") |>
   traumar::seqic_indicator_7(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -62,6 +65,7 @@ seqic_indicator_7_results_state <- trauma_2020_2024 |>
 
 # state level - by age group
 seqic_indicator_7_results_state_age <- trauma_2020_2024 |>
+  dplyr::filter(Acute_Transfer_Out == "No") |>
   traumar::seqic_indicator_7(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -109,6 +113,7 @@ seqic_indicator_7_results_state_age <- trauma_2020_2024 |>
 
 # districts
 seqic_indicator_7_results_state_districts <- trauma_2020_2024 |>
+  dplyr::filter(Acute_Transfer_Out == "No") |>
   traumar::seqic_indicator_7(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
@@ -140,6 +145,7 @@ seqic_indicator_7_results_state_districts_wide <- seqic_indicator_7_results_stat
 
 # trauma center verification levels
 seqic_indicator_7_results_state_verification <- trauma_2020_2024 |>
+  dplyr::filter(Acute_Transfer_Out == "No") |>
   traumar::seqic_indicator_7(
     level = Level,
     unique_incident_id = Unique_Incident_ID,
