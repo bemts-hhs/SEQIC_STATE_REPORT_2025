@@ -14,91 +14,6 @@ trauma_2020_2024_clean <- trauma_2020_2024 |>
   dplyr::distinct(Unique_Incident_ID, .keep_all = TRUE) |>
   dplyr::ungroup()
 
-# Facility Level Performance Metrics ----
-
-# given that traumar does not provide a grouping structure for the
-# traumar::trauma_performance() function, we will use tidyr::nest() to
-# do the grouping
-
-## Facility Level W, M, and Z Scores ----
-
-### Facility Level iterate over groups - Year and facility ----
-trauma_performance_result_years <- trauma_2020_2024_clean |>
-  tidyr::nest(data = -c(Year, `Current Facility Name`)) |>
-  dplyr::mutate(
-    results = purrr::map(
-      data,
-      ~ traumar::trauma_performance(
-        df = .x,
-        Ps_col = Probability_of_Survival_Calc,
-        outcome_col = Death,
-        z_method = "survival"
-      )
-    )
-  ) |>
-  dplyr::select(-data) |>
-  tidyr::unnest(results) |>
-  dplyr::arrange(`Current Facility Name`, Year)
-
-### Facility Level iterate over trauma type groups ----
-### facility, mechanism of injury do not add year as a stratum given that some
-### counts will be very small in groups
-trauma_performance_result_mech <- trauma_2020_2024_clean |>
-  tidyr::nest(data = -c(`Current Facility Name`, Trauma_Type)) |>
-  dplyr::mutate(
-    results = purrr::map(
-      data,
-      ~ traumar::trauma_performance(
-        df = .x,
-        Ps_col = Probability_of_Survival_Calc,
-        outcome_col = Death,
-        z_method = "survival"
-      )
-    )
-  ) |>
-  dplyr::select(-data) |>
-  tidyr::unnest(results) |>
-  dplyr::arrange(`Current Facility Name`, Trauma_Type) |>
-  dplyr::relocate(Trauma_Type, .after = `Current Facility Name`) |>
-  dplyr::mutate(
-    Trauma_Type = ifelse(is.na(Trauma_Type), "Missing", Trauma_Type)
-  )
-
-### Facility Level iterate over TTA groups ----
-### facility, mechanism of injury do not add year as a stratum given that some
-### counts will be very small in groups
-trauma_performance_result_tta <- trauma_2020_2024_clean |>
-  tidyr::nest(
-    data = -c(`Current Facility Name`, Trauma_Team_Activated)
-  ) |>
-  dplyr::mutate(
-    results = purrr::map(
-      data,
-      ~ traumar::trauma_performance(
-        df = .x,
-        Ps_col = Probability_of_Survival_Calc,
-        outcome_col = Death,
-        z_method = "survival"
-      )
-    )
-  ) |>
-  dplyr::select(-data) |>
-  tidyr::unnest(results) |>
-  dplyr::arrange(`Current Facility Name`, Trauma_Team_Activated) |>
-  dplyr::relocate(Trauma_Team_Activated, .after = `Current Facility Name`)
-
-## Facility Level Relative Mortality Metric ----
-rm_summary_results <- trauma_2020_2024_clean |>
-  dynamic_rm_bin_summary(
-    Ps_col = Probability_of_Survival_Calc,
-    outcome_col = Alive,
-    group_vars = c("Year", "Current Facility Name"),
-    n_samples = 1000,
-    bootstrap_ci = TRUE,
-    seed = 10232015
-  ) |>
-  dplyr::arrange(`Current Facility Name`, Year, bin_number)
-
 # Calculate metrics at the state level ----
 ## State Level W, M, and Z scores ----
 ### State Level iterate over groups - Year and facility ----
@@ -186,40 +101,6 @@ rm_summary_results_state <- trauma_2020_2024_clean |>
   dplyr::arrange(Year, bin_number)
 
 # EXPORT ----
-
-## Facility Level Exports ----
-
-### Export Facility Level W, M, and Z scores grouped by year ----
-export_seqic_data(
-  agency_names = unique(trauma_2024$`Current Facility Name`),
-  facility_name_col = `Current Facility Name`,
-  seqic_results = trauma_performance_result_years,
-  indicator = "_wmz_years"
-)
-
-### Export Facility Level W, M, and Z scores grouped by mechanism of injury ----
-export_seqic_data(
-  agency_names = unique(trauma_2024$`Current Facility Name`),
-  facility_name_col = `Current Facility Name`,
-  seqic_results = trauma_performance_result_mech,
-  indicator = "_wmz_mechanism"
-)
-
-### Export Facility Level W, M, and Z scores grouped by TTA ----
-export_seqic_data(
-  agency_names = unique(trauma_2024$`Current Facility Name`),
-  facility_name_col = `Current Facility Name`,
-  seqic_results = trauma_performance_result_tta,
-  indicator = "_wmz_tta"
-)
-
-### Export Facility Level RMM statistics by year ----
-export_seqic_data(
-  agency_names = unique(trauma_2024$`Current Facility Name`),
-  facility_name_col = `Current Facility Name`,
-  seqic_results = rm_summary_results,
-  indicator = "_rmm_years"
-)
 
 ## export performance by year and region at the state level ----
 
