@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+padding-top: 0px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+<h1 id="seqic-report-2025-">SEQIC Report 2025
+<img role="img" aria-label src="data:image/png;base64,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" align="right" width="200" alt /></h1>
+<!-- badges: start -->
+
+<p><a href="LICENSE"><img role="img" aria-label="Open Source" src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3OCIgaGVpZ2h0PSIyMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJsaWNlbnNlOiBNSVQiPjx0aXRsZT5saWNlbnNlOiBNSVQ8L3RpdGxlPjxmaWx0ZXIgaWQ9ImJsdXIiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjE2Ii8+PC9maWx0ZXI+PGxpbmVhckdyYWRpZW50IGlkPSJzIiB4Mj0iMCIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2JiYiIgc3RvcC1vcGFjaXR5PSIuMSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPjwvbGluZWFyR3JhZGllbnQ+PGNsaXBQYXRoIGlkPSJyIj48cmVjdCB3aWR0aD0iNzgiIGhlaWdodD0iMjAiIHJ4PSIzIi8+PC9jbGlwUGF0aD48ZyBjbGlwLXBhdGg9InVybCgjcikiPjxyZWN0IHdpZHRoPSI0NyIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjQ3IiB3aWR0aD0iMzEiIGhlaWdodD0iMjAiIGZpbGw9IiM2N2FjMDkiLz48cmVjdCB3aWR0aD0iNzgiIGhlaWdodD0iMjAiIGZpbGw9InVybCgjcykiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlZlcmRhbmEsR2VuZXZhLERlamFWdSBTYW5zLHNhbnMtc2VyaWYiIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGZvbnQtc2l6ZT0iMTEwIj48ZyB0cmFuc2Zvcm09InNjYWxlKC4xKSI+PGcgYXJpYS1oaWRkZW49InRydWUiIGZpbGw9IiMwMTAxMDEiPjx0ZXh0IHg9IjI0NSIgeT0iMTUwIiBmaWxsLW9wYWNpdHk9Ii44IiBmaWx0ZXI9InVybCgjYmx1cikiIHRleHRMZW5ndGg9IjM3MCI+bGljZW5zZTwvdGV4dD48dGV4dCB4PSIyNDUiIHk9IjE1MCIgZmlsbC1vcGFjaXR5PSIuMyIgdGV4dExlbmd0aD0iMzcwIj5saWNlbnNlPC90ZXh0PjwvZz48dGV4dCB4PSIyNDUiIHk9IjE0MCIgdGV4dExlbmd0aD0iMzcwIj5saWNlbnNlPC90ZXh0PjwvZz48ZyB0cmFuc2Zvcm09InNjYWxlKC4xKSI+PGcgYXJpYS1oaWRkZW49InRydWUiIGZpbGw9IiMwMTAxMDEiPjx0ZXh0IHg9IjYxNSIgeT0iMTUwIiBmaWxsLW9wYWNpdHk9Ii44IiBmaWx0ZXI9InVybCgjYmx1cikiIHRleHRMZW5ndGg9IjIxMCI+TUlUPC90ZXh0Pjx0ZXh0IHg9IjYxNSIgeT0iMTUwIiBmaWxsLW9wYWNpdHk9Ii4zIiB0ZXh0TGVuZ3RoPSIyMTAiPk1JVDwvdGV4dD48L2c+PHRleHQgeD0iNjE1IiB5PSIxNDAiIHRleHRMZW5ndGg9IjIxMCI+TUlUPC90ZXh0PjwvZz48L2c+PC9zdmc+" alt="Open Source" /></a></p>
+<!-- badges: end -->
+
+<p>The SEQIC Report 2025 project is a reproducible, open-source analytic
+workflow designed to generate standardized trauma quality indicators for
+Iowa-verified trauma centers. It covers data from calendar years
+2020–2024, with 2024 representing the most current year of analysis.
+This report documents state-level trauma system performance in Iowa.
+Trauma centers all receive individualized reports on the SEQIC and
+risk-adjusted benchmarking, but that is not within the scope of this
+report. The written report related to the analyses documented in this
+repository can be found on trauma registry webpage of the <a href="https://hhs.iowa.gov/health-prevention/providers-professionals/emergency-medical-services-trauma/trauma-system/trauma-data-registry">Bureau
+of Emergency Medical and Trauma Services</a> of Iowa HHS.</p>
+<p>This project operationalizes the trauma performance metrics developed
+by the System Evaluation and Quality Improvement Committee (SEQIC)—a
+multi-disciplinary group under the Iowa Department of Health and Human
+Services (HHS). The indicators reflect key aspects of trauma system
+performance, including timeliness, triage accuracy, data completeness,
+and risk adjusted mortality calculations.</p>
+<h2 id="traumar">{traumar}</h2>
+<p>This report utilizes the <code>traumar</code> R package (CRAN, <a href="https://doi.org/10.32614/CRAN.package.traumar">doi:10.32614/CRAN.package.traumar</a>)
+to generate all statistical outputs related to trauma system
+performance. The <code>traumar</code> package provides validated
+functions grounded in peer-reviewed literature to support Continuous
+Quality Improvement (CQI) and Process Improvement (PI) in trauma care.
+Metrics calculated in this report—including the W-Score, M-Score,
+Z-Score, Relative Mortality Metric (RMM), triage accuracy indicators,
+and other SEQIC indicators—are derived using methods embedded in
+<code>traumar</code>. These methods are supported by publications such
+as Napoli et al. (2017), Boyd et al. (1987), Champion et al. (1989), and
+others. For detailed information on the methodology, refer to the
+package documentation at <a href="https://bemts-hhs.github.io/traumar">https://bemts-hhs.github.io/traumar</a>.</p>
+<h2 id="summary-of-the-seqic-indicators-2025">Summary of the SEQIC
+Indicators 2025</h2>
+<table>
+<thead>
+<tr>
+<th align="center">Indicator</th>
+<th align="center">Title</th>
+<th align="center">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">1a</td>
+<td align="center">Trauma surgeon in ED &lt;= 15 min (Level I/II)</td>
+<td align="center">Proportion of Level I activations with surgeon
+arrival &lt;= 15 min. Requires calculable time from ED arrival to trauma
+team arrival.</td>
+</tr>
+<tr>
+<td align="center">1b</td>
+<td align="center">Trauma surgeon in ED &lt;= 30 min (Level III)</td>
+<td align="center">As 1a, but applies to Level III facilities and uses a
+30-minute threshold.</td>
+</tr>
+<tr>
+<td align="center">1c</td>
+<td align="center">Trauma surgeon response time unknown</td>
+<td align="center">Proportion of Level I activations where trauma
+surgeon response time is uncalculable. Denominator includes all
+‘Surgery/Trauma’ team members per incident.</td>
+</tr>
+<tr>
+<td align="center">1d</td>
+<td align="center">1st physician in ED &lt;= 5 min (Level I/II)</td>
+<td align="center">Proportion of Level I/II activations with a physician
+(defined set) arriving &lt;= 5 min. from ED arrival.</td>
+</tr>
+<tr>
+<td align="center">1e</td>
+<td align="center">1st physician in ED &lt;= 20 min (Level III/IV)</td>
+<td align="center">As 1d, but applies to Level III/IV facilities with a
+20-minute threshold.</td>
+</tr>
+<tr>
+<td align="center">1f</td>
+<td align="center">Physician response time unknown</td>
+<td align="center">Proportion of Level I/II activations where physician
+response time is uncalculable. Includes all defined service types per
+incident.</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">Missing injury time</td>
+<td align="center">Proportion of incidents missing injury time
+field.</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">Probability of Survival score present</td>
+<td align="center">Proportion of incidents with a valid Probability of
+Survival score (requires ISS, RTS, age, trauma type).</td>
+</tr>
+<tr>
+<td align="center">4a</td>
+<td align="center">Autopsy completed on deceased trauma patients</td>
+<td align="center">Proportion of deceased trauma patients with ‘Yes’ for
+autopsy. Deceased = ED/Hospital disposition of ‘Deceased/Expired’.</td>
+</tr>
+<tr>
+<td align="center">4b</td>
+<td align="center">No autopsy on death &gt;72 hrs stay</td>
+<td align="center">Proportion of deceased patients staying &gt;72 hrs
+with no autopsy performed.</td>
+</tr>
+<tr>
+<td align="center">5a</td>
+<td align="center">Blood ETOH measured</td>
+<td align="center">Proportion of all incidents where blood ETOH was
+measured. Includes pediatric cases.</td>
+</tr>
+<tr>
+<td align="center">5b</td>
+<td align="center">Blood ETOH positive</td>
+<td align="center">Proportion of blood ETOH tests that were
+positive.</td>
+</tr>
+<tr>
+<td align="center">5c</td>
+<td align="center">Drug screen completed</td>
+<td align="center">Proportion of all incidents with a drug screen
+completed. Includes pediatric cases.</td>
+</tr>
+<tr>
+<td align="center">5d</td>
+<td align="center">Drug screen positive</td>
+<td align="center">Proportion of completed drug screens that were
+positive.</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">GCS &lt; 9, definitive care arrival &gt;3 hrs
+(transferred)</td>
+<td align="center">Proportion of transfers with GCS &lt; 9 arriving at
+definitive care &gt;3 hrs from injury. Includes only calculable cases
+with defined transfer.</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">Arrival at definitive care &gt;3 hrs from injury</td>
+<td align="center">Proportion of all patients arriving at definitive
+care &gt;3 hrs after injury time.</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">Survival rate by risk category and trauma level</td>
+<td align="center">Survival rate stratified by trauma hospital level and
+patient risk: High, Moderate, Low (based on Ps, ISS, GCS, vitals).
+Missingness affects stratification.</td>
+</tr>
+<tr>
+<td align="center">9a</td>
+<td align="center">ED LOS &gt; 2 hrs in acute transfers</td>
+<td align="center">Proportion of acute transfers with ED LOS &gt;2 hrs.
+Requires complete timestamps and valid transfer status.</td>
+</tr>
+<tr>
+<td align="center">9b</td>
+<td align="center">ED LOS &gt; 3 hrs in acute transfers</td>
+<td align="center">Same as 9a but with threshold &gt;3 hrs.</td>
+</tr>
+<tr>
+<td align="center">9c</td>
+<td align="center">ED decision time &gt; 60 min in acute transfers</td>
+<td align="center">Acute transfers with &gt;60 min from arrival to
+decision to discharge. Requires complete decision timestamps.</td>
+</tr>
+<tr>
+<td align="center">9d</td>
+<td align="center">ED decision time &gt; 120 min in acute transfers</td>
+<td align="center">Same as 9c but with threshold &gt;120 min.</td>
+</tr>
+<tr>
+<td align="center">9e</td>
+<td align="center">ED discharge delay &gt; 60 min post-decision</td>
+<td align="center">Acute transfers with &gt;60 min from decision to
+physical discharge. Requires both timestamps present.</td>
+</tr>
+<tr>
+<td align="center">9f</td>
+<td align="center">ED discharge delay &gt; 120 min post-decision</td>
+<td align="center">Same as 9e but with threshold &gt;120 min.</td>
+</tr>
+<tr>
+<td align="center">10a</td>
+<td align="center">Under-triage (Cribari method)</td>
+<td align="center">Proportion of ISS &gt;15 or NFTI+ not receiving full
+trauma team activation. Denominator includes all non-fully activated,
+non-transferred incidents.</td>
+</tr>
+<tr>
+<td align="center">10b</td>
+<td align="center">Over-triage</td>
+<td align="center">Proportion of fully activated cases (Level 1) with
+ISS &lt;= 15 among kept patients.</td>
+</tr>
+<tr>
+<td align="center">10c</td>
+<td align="center">Under-triage (Modified Cribari)</td>
+<td align="center">Same numerator as 10a. Denominator includes all ISS
+&gt;15 or NFTI+ cases (more conservative).</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="center">Low ISS, &lt;24h ED stay at definitive care
+(transfers)</td>
+<td align="center">Transferred-in patients with ISS &lt;9 discharged
+from ED in &lt;24 hrs. Denominator is all definitive care
+transfers.</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td align="center">Incident submitted within 60 days of discharge</td>
+<td align="center">Proportion of incidents submitted within 60 days of
+discharge. 80% threshold per data dictionary.</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td align="center">Incident has validity score &gt;= 85%</td>
+<td align="center">Proportion of incidents with registry validity score
+&gt;= 85%.</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
